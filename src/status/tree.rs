@@ -48,8 +48,7 @@ impl<T> Tree<T> {
 fn get_subdirectory<'a, T>(
 	children: &'a mut BTreeMap<String, Tree<T>>,
 	name: &str,
-) -> Result<&'a mut BTreeMap<String, Tree<T>>>
-{
+) -> Result<&'a mut BTreeMap<String, Tree<T>>> {
 	let entry = children
 		.entry(name.to_owned())
 		.or_insert_with(|| Tree::Directory { children: BTreeMap::new() });
@@ -63,21 +62,20 @@ fn render<T, Fmt: fmt::Display>(
 	tree: &BTreeMap<String, Tree<T>>,
 	prefix: &str,
 	display: &impl Fn(&str, &T) -> Fmt,
-)
-{
+) {
 	for (i, (name, kid)) in tree.iter().enumerate() {
 		let intersection = if i == tree.len() - 1 { '└' } else { '├' };
 		match kid {
 			Tree::Leaf { object } => {
 				let text = (*display)(&name, object);
 				println!("{}{}─{}", prefix, intersection, text)
-			},
+			}
 			Tree::Directory { children } => {
 				let subpipe = if i == tree.len() - 1 { ' ' } else { '│' };
 				let subprefix = format!("{}{} ", prefix, subpipe);
 				println!("{}{}─{}", prefix, intersection, name);
 				render(children, &subprefix, display)
-			},
+			}
 		}
 	}
 }

@@ -1,7 +1,8 @@
 mod tree;
 
 use crate::{
-	config::{Config, Link}, status::tree::Tree
+	config::{Config, Link},
+	status::tree::Tree,
 };
 use anyhow::Result;
 

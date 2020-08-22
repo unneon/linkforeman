@@ -24,7 +24,7 @@ pub struct Link {
 }
 
 impl Config {
-	pub fn links(&self) -> impl Iterator<Item=Link>+'_ {
+	pub fn links(&self) -> impl Iterator<Item = Link> + '_ {
 		self.links.values().flat_map(expand_link_entry)
 	}
 }
