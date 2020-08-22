@@ -14,3 +14,4 @@ clap = "=3.0.0-beta.1"
 dirs = "3.0.1"
 serde = { version = "1.0.115", features = ["derive"] }
 toml = "0.5.6"
+walkdir = "2.3.1"

@@ -8,17 +8,12 @@ The source paths are relative to the working directory, and the destination path
 
 ```toml
 [links]
+# This is a symlink to the $PWD/bash.sh file at ~/.bashrc.
 bash = { src = "bash.sh", dest = ".bashrc" }
-cargo = { src = "cargo.toml", dest = ".cargo/config" }
-fish = { src = "fish", dest = ".config/fish" }
-gdb = { src = "gdb", dest = ".gdbinit" }
-git = { src = "git", dest = ".gitconfig" }
+# This is a symlink to the $PWD/icie/ directory at ~/.config/icie/.
 icie = { src = "icie", dest = ".config/icie" }
-latex = { src = "latex/pustaczek.cls", dest = "/usr/local/share/texmf/tex/latex/local/pustaczek.cls" }
-npm = { src = "npm", dest = ".npmrc" }
-neovim = { src = "neovim.vim", dest = ".config/nvim/init.vim" }
-rustfmt = { src = "rustfmt.toml", dest = ".rustfmt.toml" }
-vscode = { src = "vscode.json", dest = ".config/Code/User/settings.json" }
-yay = { src = "yay.sh", dest = ".config/yay/makepkg.conf" }
-zathura = { src = "zathura", dest = ".config/zathura/zathurarc" }
+# This is a symlink to the $PWD/nfs file at /etc/exports.
+nfs = { src = "nfs", dest = "/etc/exports" }
+# This generates symlinks to every $PWD/fish/* file at analogous ~/.config/fish/*.
+fish = { src = "fish", dest = ".config/fish", recursive = true }
 ```

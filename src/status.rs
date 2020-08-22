@@ -19,11 +19,11 @@ struct Row {
 
 pub fn run(config: &Config) -> Result<()> {
 	let mut tree = Tree::new();
-	for link in config.links.values() {
+	for link in config.links() {
 		let components = link.components()?;
 		let components: Vec<_> = components.iter().map(String::as_str).collect();
 		let destination = link.destination()?.display().to_string();
-		let row = Row { status: query_status(link)?, destination };
+		let row = Row { status: query_status(&link)?, destination };
 		tree.add(&components, row)?;
 	}
 	println!("{}", std::env::current_dir().unwrap().display());
