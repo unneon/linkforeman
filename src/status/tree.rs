@@ -13,7 +13,7 @@ impl<T> Tree<T> {
 	}
 
 	pub fn add(&mut self, path: &[&str], object: T) -> Result<()> {
-		ensure!(path.len() > 0, "root object must be a directory");
+		ensure!(!path.is_empty(), "root object must be a directory");
 		let mut directory = self.get_root_mut();
 		for component in &path[..path.len() - 1] {
 			directory = get_subdirectory(directory, *component)?;
