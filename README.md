@@ -16,4 +16,6 @@ icie = { src = "icie", dest = ".config/icie" }
 nfs = { src = "nfs", dest = "/etc/exports" }
 # This generates symlinks to every $PWD/fish/* file at analogous ~/.config/fish/*.
 fish = { src = "fish", dest = ".config/fish", recursive = true }
+# This represents a copy of the file instead of a symlink.
+xdg = { src = "xdg", dest = ".config/user-dirs.dirs", symlink = false }
 ```

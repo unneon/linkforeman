@@ -8,9 +8,11 @@ use anyhow::Result;
 
 enum Status {
 	Active,
+	UpToDate,
 	DoesNotExist,
 	WrongType,
 	WrongDestination,
+	OutOfDate,
 }
 
 struct Row {
@@ -33,17 +35,28 @@ pub fn run(config: &Config) -> Result<()> {
 }
 
 fn query_status(link: &Link) -> Result<Status> {
+	let source = link.source()?;
 	let destination = link.destination()?;
 	Ok(if !destination.exists() {
 		Status::DoesNotExist
 	} else {
 		let metadata = destination.symlink_metadata()?;
-		if !metadata.file_type().is_symlink() {
-			Status::WrongType
-		} else if destination.canonicalize()? != link.source()?.canonicalize()? {
-			Status::WrongDestination
+		if link.is_symlink() {
+			if !metadata.file_type().is_symlink() {
+				Status::WrongType
+			} else if destination.canonicalize()? != source.canonicalize()? {
+				Status::WrongDestination
+			} else {
+				Status::Active
+			}
 		} else {
-			Status::Active
+			if !metadata.file_type().is_file() {
+				Status::WrongType
+			} else if std::fs::read(source)? != std::fs::read(destination)? {
+				Status::OutOfDate
+			} else {
+				Status::UpToDate
+			}
 		}
 	})
 }
@@ -51,9 +64,11 @@ fn query_status(link: &Link) -> Result<Status> {
 fn display_status(name: &str, row: &Row) -> String {
 	let (color, message) = match row.status {
 		Status::Active => (32, "active"),
+		Status::UpToDate => (32, "up to date"),
 		Status::DoesNotExist => (31, "does not exist"),
 		Status::WrongDestination => (31, "wrong destination"),
 		Status::WrongType => (31, "wrong type"),
+		Status::OutOfDate => (31, "out of date"),
 	};
 	format!("{}, \x1B[1;{}m● {}\x1B[0m at {}", name, color, message, row.destination)
 }

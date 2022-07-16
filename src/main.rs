@@ -1,3 +1,5 @@
+#![allow(clippy::collapsible_else_if)]
+
 use anyhow::Result;
 use clap::Parser;
 use cli::Opts;

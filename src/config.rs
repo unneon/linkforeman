@@ -21,6 +21,8 @@ struct LinkEntry {
 pub struct Link {
 	src: PathBuf,
 	dest: PathBuf,
+	#[serde(default = "default_symlink")]
+	symlink: bool,
 }
 
 impl Config {
@@ -46,6 +48,10 @@ impl Link {
 	pub fn destination(&self) -> Result<PathBuf> {
 		Ok(home_dir().context("querying home directory failed")?.join(&self.dest))
 	}
+
+	pub fn is_symlink(&self) -> bool {
+		self.symlink
+	}
 }
 
 pub fn load() -> Result<Config> {
@@ -68,9 +74,14 @@ fn expand_link_entry(link: &LinkEntry) -> Vec<Link> {
 			if let Ok(relative) = entry.path().strip_prefix(&link.link.src) {
 				let src = entry.path().to_owned();
 				let dest = link.link.dest.join(relative);
-				links.push(Link { src, dest });
+				let symlink = link.link.symlink;
+				links.push(Link { src, dest, symlink });
 			}
 		}
 	}
 	links
+}
+
+fn default_symlink() -> bool {
+	true
 }
