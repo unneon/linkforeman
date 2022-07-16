@@ -1,7 +1,7 @@
-use clap::Clap;
+use clap::Parser;
 
 /// Simple application to keep track of your config symlinks.
-#[derive(Clap, Debug)]
+#[derive(Parser, Debug)]
 pub enum Opts {
 	/// Display the status of all managed links.
 	Status,

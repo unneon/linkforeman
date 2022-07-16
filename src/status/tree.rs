@@ -67,7 +67,7 @@ fn render<T, Fmt: fmt::Display>(
 		let intersection = if i == tree.len() - 1 { '└' } else { '├' };
 		match kid {
 			Tree::Leaf { object } => {
-				let text = (*display)(&name, object);
+				let text = (*display)(name, object);
 				println!("{}{}─{}", prefix, intersection, text)
 			}
 			Tree::Directory { children } => {

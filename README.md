@@ -1,4 +1,4 @@
-# Linkforeman [![](https://img.shields.io/github/workflow/status/pustaczek/linkforeman/Continuous%20Integration?logo=github-actions&logoColor=white)](https://github.com/pustaczek/linkforeman/actions) [![](https://img.shields.io/codecov/c/github/pustaczek/linkforeman?logo=codecov&logoColor=white)](https://codecov.io/gh/pustaczek/linkforeman) [![](https://img.shields.io/github/license/pustaczek/linkforeman?color=success&logo=github)](https://github.com/pustaczek/linkforeman)
+# Linkforeman [![](https://img.shields.io/github/workflow/status/unneon/linkforeman/CI?logo=github-actions&logoColor=white)](https://github.com/unneon/linkforeman/actions) [![](https://img.shields.io/github/license/unneon/linkforeman?color=success&logo=github)](https://github.com/unneon/linkforeman)
 
 Simple application to manage your config symlinks.
 Create and fill out a `.linkforeman.toml` file like the example, and run `linkforeman status` to check their status.

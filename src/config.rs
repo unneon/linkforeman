@@ -63,14 +63,12 @@ fn expand_link_entry(link: &LinkEntry) -> Vec<Link> {
 	}
 
 	let mut links = Vec::new();
-	for entry in WalkDir::new(&link.link.src) {
-		if let Ok(entry) = entry {
-			if entry.file_type().is_file() {
-				if let Ok(relative) = entry.path().strip_prefix(&link.link.src) {
-					let src = entry.path().to_owned();
-					let dest = link.link.dest.join(relative);
-					links.push(Link { src, dest });
-				}
+	for entry in WalkDir::new(&link.link.src).into_iter().flatten() {
+		if entry.file_type().is_file() {
+			if let Ok(relative) = entry.path().strip_prefix(&link.link.src) {
+				let src = entry.path().to_owned();
+				let dest = link.link.dest.join(relative);
+				links.push(Link { src, dest });
 			}
 		}
 	}
